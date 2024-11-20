@@ -59,6 +59,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** Tests for {@link org.apache.beam.fn.harness.AssignWindowsRunner}. */
 @RunWith(JUnit4.class)

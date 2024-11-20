@@ -300,6 +300,8 @@ public class ProcessBundleHandler {
 
     // Skip reprocessing processed pTransforms.
     if (!processedPTransformIds.contains(pTransformId)) {
+      Logger LOG = LoggerFactory.getLogger(ProcessBundleHandler.class);
+      LOG.warn("***** CRW: Logging from ProcessBundleHandler 304 *****");
       Object runner =
           urnToPTransformRunnerFactoryMap
               .getOrDefault(pTransform.getSpec().getUrn(), defaultPTransformRunnerFactory)
@@ -372,6 +374,7 @@ public class ProcessBundleHandler {
 
                     @Override
                     public Set<String> getRunnerCapabilities() {
+                      LOG.warn("***** CRW: Getting runner capabilities from context *****");
                       return runnerCapabilities;
                     }
 
@@ -488,6 +491,8 @@ public class ProcessBundleHandler {
                     }
                   });
       if (runner instanceof BeamFnDataReadRunner) {
+        LOG.warn("***** CRW: Logging from BeamFnDataReadRunner check *****");
+        // TODO: Stuck here, where is the flag for the side input cache supposed to be set?
         channelRoots.add((BeamFnDataReadRunner) runner);
       }
       processedPTransformIds.add(pTransformId);

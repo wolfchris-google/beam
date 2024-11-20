@@ -36,6 +36,8 @@ import org.apache.beam.sdk.transforms.Materializations.MultimapView;
 import org.apache.beam.sdk.util.ByteStringOutputStream;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.vendor.grpc.v1p60p1.com.google.protobuf.ByteString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of a multimap side input that utilizes the Beam Fn State API to fetch values.
@@ -75,6 +77,9 @@ public class MultimapSideInput<K, V> implements MultimapView<K, V> {
     this.keyCoder = keyCoder;
     this.valueCoder = valueCoder;
     this.useBulkRead = useBulkRead;
+
+    Logger LOG = LoggerFactory.getLogger(MultimapSideInput.class);
+    LOG.warn("***** CRW useBulkRead in constructor: " + this.useBulkRead + " *****");
   }
 
   @Override
@@ -86,6 +91,12 @@ public class MultimapSideInput<K, V> implements MultimapView<K, V> {
   @Override
   public Iterable<V> get(K k) {
     ByteString encodedKey = encodeKey(k);
+
+    Logger LOG = LoggerFactory.getLogger(MultimapSideInput.class);
+    LOG.warn("***** CRW: Logging from MultimapSideInput *****");
+    LOG.warn("***** CRW: Adding a log for testing *****");
+
+    LOG.warn("***** CRW useBulkRead: " + useBulkRead + " *****");
 
     if (useBulkRead) {
       if (bulkReadResult == null) {

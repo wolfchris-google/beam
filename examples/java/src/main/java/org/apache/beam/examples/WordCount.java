@@ -51,6 +51,8 @@ import org.apache.beam.sdk.transforms.ParDo;
 import org.apache.beam.sdk.transforms.SimpleFunction;
 import org.apache.beam.sdk.values.KV;
 import org.apache.beam.sdk.values.PCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An example that counts words in Shakespeare and includes Beam best practices.
@@ -111,6 +113,8 @@ public class WordCount {
 
     @ProcessElement
     public void processElement(@Element String element, OutputReceiver<String> receiver) {
+      Logger LOG = LoggerFactory.getLogger(WordCount.class);
+      LOG.warn("***** CRW: Logging from Multimap Materialization Urn *****");
       lineLenDist.update(element.length());
       if (element.trim().isEmpty()) {
         emptyLines.inc();

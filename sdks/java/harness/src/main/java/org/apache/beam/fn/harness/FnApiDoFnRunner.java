@@ -131,6 +131,8 @@ import org.joda.time.DateTimeUtils;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.joda.time.format.PeriodFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A {@link DoFnRunner} specific to integrating with the Fn Api. This is to remove the layers of
@@ -167,6 +169,12 @@ public class FnApiDoFnRunner<InputT, RestrictionT, PositionT, WatermarkEstimator
     @Override
     public final FnApiDoFnRunner<InputT, RestrictionT, PositionT, WatermarkEstimatorStateT, OutputT>
         createRunnerForPTransform(Context context) {
+
+      Logger log = LoggerFactory.getLogger(FnApiDoFnRunner.class);
+      log.warn("***** CRW context: " + context.toString() + " *****");
+      for (String item : context.getRunnerCapabilities()) {
+        log.warn("***** CRW runner capability: " + item + " *****");
+      }
 
       FnApiDoFnRunner<InputT, RestrictionT, PositionT, WatermarkEstimatorStateT, OutputT> runner =
           new FnApiDoFnRunner<>(

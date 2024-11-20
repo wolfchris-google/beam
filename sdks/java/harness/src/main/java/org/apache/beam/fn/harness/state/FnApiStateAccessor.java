@@ -72,6 +72,8 @@ import org.apache.beam.vendor.guava.v32_1_2_jre.com.google.common.collect.Iterab
 import org.apache.beam.vendor.guava.v32_1_2_jre.com.google.common.collect.Maps;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.joda.time.Instant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** Provides access to side inputs and state via a {@link BeamFnStateClient}. */
 @SuppressWarnings({
@@ -238,6 +240,18 @@ public class FnApiStateAccessor<K> implements SideInputReader, StateBinder {
                               key,
                               sideInputSpec.getCoder()));
                 case Materializations.MULTIMAP_MATERIALIZATION_URN:
+                  Logger LOG = LoggerFactory.getLogger(FnApiStateAccessor.class);
+                  LOG.warn("***** CRW: Logging from Multimap Materialization Urn *****");
+                  LOG.warn("***** CRW: Adding a log for testing *****");
+
+                  LOG.warn("***** CRW: passed in useBulkRead: " + runnerCapabilites.contains(
+                      BeamUrns.getUrn(
+                          RunnerApi.StandardRunnerProtocols.Enum
+                              .MULTIMAP_KEYS_VALUES_SIDE_INPUT)) + " *****");
+
+                  LOG.warn("***** CRW: value we're looking for in runner capabilities " + BeamUrns.getUrn(
+                      RunnerApi.StandardRunnerProtocols.Enum
+                          .MULTIMAP_KEYS_VALUES_SIDE_INPUT) + " *****");
                   return sideInputSpec
                       .getViewFn()
                       .apply(
